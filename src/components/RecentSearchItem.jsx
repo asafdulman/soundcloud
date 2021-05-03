@@ -1,9 +1,6 @@
-import { useContext } from "react"
-import { SearchContext } from "../App"
 
-export function RecentSearchItem({ recentSearch }) {
+export function RecentSearchItem({ recentSearch, onSearch }) {
 
-    const onSearch = useContext(SearchContext)
     return (
         <div className="recent-search-item-box" onClick={(ev) => onSearch(ev, recentSearch)}>
             <p>{recentSearch}</p>

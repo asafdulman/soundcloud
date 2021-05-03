@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 export function SearchTrackBox({ onSearch }) {
 
-    const [searchBy, setSearchBy] = useState()
+    const [searchBy, setSearchBy] = useState('')
     const inputRef = useRef()
 
     useEffect(() => {

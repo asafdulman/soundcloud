@@ -19,11 +19,15 @@
         }
 
         button {
-            padding: 10px 20px;
+            padding: 10px;
             background-color: $primary-color;
             border: none;
             border-radius: 20px;
             transition: all 0.4s ease;
+            
+            &:hover {
+                background-color: $secondary-color;
+            }
 
             &:active {
                 transform: scale(0.5);

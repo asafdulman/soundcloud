@@ -22,7 +22,10 @@ async function loadTracks(searchValue) {
 }
 
 async function getSongToPlay(url) {
-    const data = await window.SC.oEmbed(url, { auto_play: true, maxheight: 200 })
+    const data = await window.SC.oEmbed(url, {
+        auto_play: true,
+        maxheight: 200
+    })
     return data
 }
 

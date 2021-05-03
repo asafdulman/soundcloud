@@ -9,7 +9,6 @@ import { trackService } from './services/trackService';
 import './assets/scss/global.scss'
 import { SearchTrackBox } from './components/SearchTrackBox';
 
-export const SearchContext = React.createContext()
 
 function App() {
 
@@ -23,7 +22,6 @@ function App() {
   const [trackListView, setTrackListView] = useState()
 
   useEffect(() => {
-
     window.SC.initialize({
       client_id: 'ggX0UomnLs0VmW7qZnCzw'
     });
@@ -34,6 +32,7 @@ function App() {
 
   const onSearch = async (ev, searchBy) => {
     ev.preventDefault()
+    if (!searchBy) return;
     setSearchTrackBy(searchBy)
     recentSearches.length ? setRecentSearches([searchBy, ...recentSearches]) : setRecentSearches([searchBy])
     const tracksInfo = await trackService.loadTracks(searchBy)
@@ -47,10 +46,10 @@ function App() {
   }
 
   const onSelectTrack = (track) => {
-      setSelectedTrack(track)
-      setTimeout(() => {
-        setSelectedTrackImg(track)
-      }, 2000)
+    setSelectedTrack(track)
+    setTimeout(() => {
+      setSelectedTrackImg(track)
+    }, 2000)
   }
 
   const onPlayTrack = async (track) => {
@@ -72,13 +71,11 @@ function App() {
           <SearchButtons onGetNextResults={onGetNextResults} onSetTrackListView={onSetTrackListView} />
         </div>
         <div className="selected-track-container">
-          {selectedTrackImg ? <SelectedTrack track={selectedTrackImg} selectedTrack={selectedTrack} onPlayTrack={onPlayTrack} /> :
-          <h1 className="waiting-heading">Waiting For a Tune...</h1>}
+          {selectedTrackImg ? <SelectedTrack track={selectedTrackImg} onPlayTrack={onPlayTrack} /> :
+            <h1 className="waiting-heading">Waiting For a Tune...</h1>}
           {trackToPlay && <Player trackToPlay={trackToPlay} />}
         </div>
-        <SearchContext.Provider value={onSearch}>
-          <RecentSearches recentSearches={recentSearches} />
-        </SearchContext.Provider>
+          <RecentSearches recentSearches={recentSearches} onSearch={onSearch} />
       </div>
     </div>
   );
