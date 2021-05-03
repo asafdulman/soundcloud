@@ -8,7 +8,7 @@ export function RecentSearches({ recentSearches, onSearch }) {
         <div className="recent-searches-box">
             <h4>Your Recent Searches</h4>
             <div className="recent-searches-list-box">
-                {searches?.map((recentSearch, index) => <RecentSearchItem key={index} onSearch={onSearch} recentSearch={recentSearch} />)}
+                {!searches.length ? <p>Nothing here yet...</p> : searches?.map((recentSearch, index) => <RecentSearchItem key={index} onSearch={onSearch} recentSearch={recentSearch} />)}
             </div>
         </div>
     )

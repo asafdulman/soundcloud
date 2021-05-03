@@ -8,6 +8,7 @@ import { LIST_TILE_TOGGLE_VIEW, TRACKS_STORAGE_KEY } from './constants';
 import { trackService } from './services/trackService';
 import './assets/scss/global.scss'
 import { SearchTrackBox } from './components/SearchTrackBox';
+import { ErrorMessage } from './components/ErrorMessage';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const [searchTrackBy, setSearchTrackBy] = useState()
   const [recentSearches, setRecentSearches] = useState([])
   const [trackListView, setTrackListView] = useState()
+  const [isErrorMessageOpen, setIsErrorMessageOpen] = useState()
 
   useEffect(() => {
     window.SC.initialize({
@@ -36,7 +38,15 @@ function App() {
     setSearchTrackBy(searchBy)
     recentSearches.length ? setRecentSearches([searchBy, ...recentSearches]) : setRecentSearches([searchBy])
     const tracksInfo = await trackService.loadTracks(searchBy)
+    if (!tracksInfo.collection.length) showErrorMessage()
     setTracks(tracksInfo.collection)
+  }
+
+  const showErrorMessage = () => {
+    setIsErrorMessageOpen(true)
+    setTimeout(() => {
+      setIsErrorMessageOpen(false)
+    }, 3000)
   }
 
   const onGetNextResults = async () => {
@@ -75,8 +85,9 @@ function App() {
             <h1 className="waiting-heading">Waiting For a Tune...</h1>}
           {trackToPlay && <Player trackToPlay={trackToPlay} />}
         </div>
-          <RecentSearches recentSearches={recentSearches} onSearch={onSearch} />
+        <RecentSearches recentSearches={recentSearches} onSearch={onSearch} />
       </div>
+      {isErrorMessageOpen && <ErrorMessage />}
     </div>
   );
 }
