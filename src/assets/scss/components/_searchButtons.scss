@@ -1,0 +1,27 @@
+.search-btns-box {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+
+    button {
+        background-color: transparent;
+        border: none;
+        font-size: 25px;
+        margin: 5px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            color: rgb(97, 97, 97);
+
+        }
+    }
+}
+
+.next-btn {
+
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
